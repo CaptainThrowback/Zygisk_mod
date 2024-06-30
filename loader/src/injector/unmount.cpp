@@ -12,7 +12,7 @@ namespace {
     constexpr auto MODULE_DIR = "/data/adb/modules";
     constexpr auto KSU_OVERLAY_SOURCE = "KSU";
     constexpr auto AP_OVERLAY_SOURCE = "APatch";
-    const std::vector<std::string> KSU_PARTITIONS{"/system", "/vendor", "/product", "/system_ext", "/odm", "/oem"};
+    const std::vector<std::string> DEVICE_PARTITIONS{"/system", "/vendor", "/product", "/system_ext", "/odm", "/oem"};
 
     void lazy_unmount(const char* mountpoint) {
         if (umount2(mountpoint, MNT_DETACH) != -1) {
@@ -44,7 +44,7 @@ void revert_unmount_ksu() {
         // Unmount ksu overlays
         if (info.type == "overlay"
             && info.source == KSU_OVERLAY_SOURCE
-            && std::find(KSU_PARTITIONS.begin(), KSU_PARTITIONS.end(), info.target) != KSU_PARTITIONS.end()) {
+            && std::find(DEVICE_PARTITIONS.begin(), DEVICE_PARTITIONS.end(), info.target) != DEVICE_PARTITIONS.end()) {
             targets.emplace_back(info.target);
         }
         // Unmount temp dir
@@ -87,7 +87,7 @@ void revert_unmount_magisk() {
 }
 
 void revert_unmount_apatch() {
-    std::string ksu_loop;
+    std::string ap_loop;
     std::vector<std::string> targets;
 
     // Unmount ksu module dir last
@@ -95,7 +95,7 @@ void revert_unmount_apatch() {
 
     for (auto& info: parse_mount_info("self")) {
         if (info.target == MODULE_DIR) {
-            ksu_loop = info.source;
+            ap_loop = info.source;
             continue;
         }
         // Unmount everything mounted to /data/adb
@@ -105,7 +105,7 @@ void revert_unmount_apatch() {
         // Unmount ksu overlays
         if (info.type == "overlay"
             && info.source == AP_OVERLAY_SOURCE
-            && std::find(KSU_PARTITIONS.begin(), KSU_PARTITIONS.end(), info.target) != KSU_PARTITIONS.end()) {
+            && std::find(DEVICE_PARTITIONS.begin(), DEVICE_PARTITIONS.end(), info.target) != DEVICE_PARTITIONS.end()) {
             targets.emplace_back(info.target);
         }
         // Unmount temp dir
@@ -115,7 +115,7 @@ void revert_unmount_apatch() {
     }
     for (auto& info: parse_mount_info("self")) {
         // Unmount everything from ksu loop except ksu module dir
-        if (info.source == ksu_loop && info.target != MODULE_DIR) {
+        if (info.source == ap_loop && info.target != MODULE_DIR) {
             targets.emplace_back(info.target);
         }
     }

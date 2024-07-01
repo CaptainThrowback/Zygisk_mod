@@ -4,5 +4,5 @@ export TMP_PATH=/sbin
 [ -d /sbin ] || export TMP_PATH=/debug_ramdisk
 [ ! -e /data/adb/litemode ] || export TMP_PATH=/dev/net0
 
-export TMP_PATH=/data/local/tmp/zygisk
+export TMP_PATH=/data/adb/zygisksu/tmp
 exec $MODDIR/bin/zygisk-ptrace64 ctl $*

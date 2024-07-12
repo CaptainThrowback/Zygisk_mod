@@ -24,7 +24,7 @@ pub fn setup() {
 
     let impl_ = match (apatch_version, ksu_version, magisk_version) {
         (None, None, None) => RootImpl::None,
-        (Some(_), Some(_), Some(_)) => RootImpl::Multiple,
+        (Some(_), None, Some(_)) => RootImpl::Multiple,
         (Some(apatch_version),None, None) => match apatch_version {
             apatch::Version::Supported => RootImpl::APatch,
             apatch::Version::TooOld => RootImpl::TooOld,

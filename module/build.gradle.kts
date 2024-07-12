@@ -88,8 +88,9 @@ androidComponents.onVariants { variant ->
         }
 
         val root = moduleDir.get()
+    }
 
-        val zipTask = task<Zip>("zip$variantCapped") {
+    val zipTask = task<Zip>("zip$variantCapped") {
         group = "module"
         dependsOn(prepareModuleFilesTask)
         archiveFileName.set(zipFileName)

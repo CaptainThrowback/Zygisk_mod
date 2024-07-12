@@ -1,3 +1,5 @@
+use std::ptr::addr_of;
+
 mod kernelsu;
 mod magisk;
 mod apatch;
@@ -48,7 +50,7 @@ pub fn setup() {
 }
 
 pub fn get_impl() -> &'static RootImpl {
-    unsafe { &ROOT_IMPL }
+  unsafe { &*addr_of!(ROOT_IMPL) }
 }
 
 pub fn uid_granted_root(uid: i32) -> bool {

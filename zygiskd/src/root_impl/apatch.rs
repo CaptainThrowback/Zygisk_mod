@@ -52,6 +52,9 @@ pub fn get_apatch() -> Option<Version> {
         .output()
         .ok()?;
     let stdout1 = String::from_utf8(output1.stdout).ok()?;
+    if !stdout1.contains("APatch") {
+        return None;
+    }
     let version = parse_version(&stdout1);
     const MAX_OLD_VERSION: i32 = MIN_APATCH_VERSION - 1;
     match version {

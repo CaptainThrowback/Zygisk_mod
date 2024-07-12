@@ -1,6 +1,7 @@
 use std::process::{Command, Stdio};
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
+use csv::Reader;
 use serde::Deserialize;
 use crate::constants::MIN_APATCH_VERSION;
 
@@ -52,9 +53,6 @@ pub fn get_apatch() -> Option<Version> {
         .output()
         .ok()?;
     let stdout1 = String::from_utf8(output1.stdout).ok()?;
-    if !stdout1.contains("APatch") {
-        return None;
-    }
     let version = parse_version(&stdout1);
     const MAX_OLD_VERSION: i32 = MIN_APATCH_VERSION - 1;
     match version {
@@ -66,7 +64,6 @@ pub fn get_apatch() -> Option<Version> {
 }
 
 #[derive(Deserialize)]
-#[allow(dead_code)]
 struct PackageConfig {
     pkg: String,
     exclude: i32,
@@ -85,7 +82,7 @@ fn read_package_config() -> Result<Vec<PackageConfig>, std::io::Error> {
         match record {
             Ok(config) => package_configs.push(config),
             Err(error) => {
-                log::warn!("Error deserializing record: {}", error);
+                log::warn!("Error deserializing record");
             }
         }
     }
@@ -103,7 +100,7 @@ pub fn uid_granted_root(uid: i32) -> bool {
                 .unwrap_or(false)
         }
         Err(err) => {
-            log::warn!("Error reading package config: {}", err);
+            log::warn!("Error reading package config");
             return false;
         }
     }
@@ -124,7 +121,7 @@ pub fn uid_should_umount(uid: i32) -> bool {
                 .unwrap_or(false)
         }
         Err(err) => {
-            log::warn!("Error reading package configs: {}", err);
+            log::warn!("Error reading package configs");
             false
         }
     }

@@ -17,6 +17,7 @@
 #include "utils.hpp"
 #include "files.hpp"
 #include "misc.hpp"
+#include "daemon.h"
 
 #define STOPPED_WITH(sig, event) WIFSTOPPED(status) && (status >> 8 == ((sig) | (event << 8)))
 
@@ -683,41 +684,43 @@ static char post_section[1024];
   }
 
 static void updateStatus() {
-  FILE *prop = fopen(prop_path, "w");
-  char status_text[1024] = "monitor: ";
+  if (ZYGOTE_ROOT_IMPL_MAGISK) {
+    FILE *prop = fopen(prop_path, "w");
+    char status_text[1024] = "monitor: ";
 
-  switch (tracing_state) {
-    case TRACING: {
-      strcat(status_text, "😋 tracing");
+    switch (tracing_state) {
+      case TRACING: {
+        strcat(status_text, "😋 tracing");
 
-      break;
+        break;
+      }
+      case STOPPING: [[fallthrough]];
+      case STOPPED: {
+        strcat(status_text, "❌ stopped");
+
+        break;
+      }
+      case EXITING: {
+        strcat(status_text, "❌ exited");
+
+        break;
+      }
     }
-    case STOPPING: [[fallthrough]];
-    case STOPPED: {
-      strcat(status_text, "❌ stopped");
 
-      break;
+    if (tracing_state != TRACING && monitor_stop_reason[0] != '\0') {
+      strcat(status_text, "(");
+      strcat(status_text, monitor_stop_reason);
+      strcat(status_text, ")");
     }
-    case EXITING: {
-      strcat(status_text, "❌ exited");
+    strcat(status_text, ",");
 
-      break;
-    }
+    WRITE_STATUS_ABI(64)
+    WRITE_STATUS_ABI(32)
+
+    fprintf(prop, "%s[%s] %s", pre_section, status_text, post_section);
+
+    fclose(prop);
   }
-
-  if (tracing_state != TRACING && monitor_stop_reason[0] != '\0') {
-    strcat(status_text, "(");
-    strcat(status_text, monitor_stop_reason);
-    strcat(status_text, ")");
-  }
-  strcat(status_text, ",");
-
-  WRITE_STATUS_ABI(64)
-  WRITE_STATUS_ABI(32)
-
-  fprintf(prop, "%s[%s] %s", pre_section, status_text, post_section);
-
-  fclose(prop);
 }
 
 static bool prepare_environment() {

@@ -1,0 +1,73 @@
+{
+  "langName": "简体中文 (中国)",
+  "cmdErrors": {
+    "ptrace64": "执行zygisk-ptrace64时出现错误",
+    "ptrace32": "执行zygisk-ptrace32时出现错误",
+    "ls": "列出模块zygisk文件夹中的文件时出现错误",
+    "cat": "读取模块module.prop时出现错误",
+    "find": "查找zygisk模块时出现错误"
+  },
+  "global": {
+    "unknown": "未知"
+  },
+  "modal": {
+    "logs": {
+      "header": "错误记录",
+      "placeholder": "未发现任何错误!"
+    },
+    "language": {
+      "header": "选择你的语言"
+    }
+  },
+  "page": {
+    "home": {
+      "header": "Home",
+      "status": {
+        "unknown": "ReZygisk处于未知状态!",
+        "notWorking": "ReZygisk无法运行!",
+        "ok": "ReZygisk正常运行!",
+        "partially": "ReZygisk部分正常运行!"
+      },
+      "info": {
+        "version": "版本",
+        "root": "Root实现",
+        "zygote": {
+          "injected": "已注入",
+          "notInjected": "注入失败",
+          "unknown": "未知"
+        }
+      }
+    },
+    "modules": {
+      "header": "模块",
+      "arch": "架构: "
+    },
+    "action": {
+      "header": "Action",
+      "daemonButton": {
+        "start": "启动",
+        "stop": "停止",
+        "exit": "退出"
+      }
+    },
+    "settings": {
+      "header": "设置",
+      "font": {
+        "header": "使用系统字体",
+        "description": "此选项将在当前界面中使用系统字体。注意：可能与 FlipFont 不兼容"
+      },
+      "theme": {
+        "header": "Enable light theme",
+        "description": "This option will enable light theme for WebUI"
+      },
+      "language": {
+        "header": "Change language",
+        "description": "Change to your new language"
+      },
+      "logs": {
+        "header": "Error History",
+        "description": "View all of your error log"
+      }
+    }
+  }
+}

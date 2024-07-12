@@ -1,0 +1,73 @@
+{
+  "langName": "Português (Brasil)",
+  "cmdErrors": {
+    "ptrace64": "Erro ao executar zygisk-ptrace64",
+    "ptrace32": "Erro ao executar zygisk-ptrace32",
+    "ls": "Erro ao listar arquivos na pasta zygisk do módulo",
+    "cat": "Erro ao ler module.prop do módulo",
+    "find": "Erro ao encontrar módulos que usam o zygisk"
+  },
+  "global": {
+    "unknown": "Desconhecido"
+  },
+  "modal": {
+    "logs": {
+      "header": "Histórico de erros",
+      "placeholder": "No error log recorded here!"
+    },
+    "language": {
+      "header": "Escolha sua nova língua"
+    }
+  },
+  "page": {
+    "home": {
+      "header": "Lar",
+      "status": {
+        "unknown": "Desconhecido",
+        "notWorking": "Não está funcionando",
+        "ok": "Trabalhando",
+        "partially": "Parcialmente funcionando"
+      },
+      "info": {
+        "version": "Versão",
+        "root": "Implementação de root",
+        "zygote": {
+          "injected": "Injetado",
+          "notInjected": "Não Injetado",
+          "unknown": "Desconhecido"
+        }
+      }
+    },
+    "modules": {
+      "header": "Módulos",
+      "arch": "Arquitetura: "
+    },
+    "action": {
+      "header": "Ações",
+      "daemonButton": {
+        "start": "Iniciar",
+        "stop": "Parar",
+        "exit": "Sair"
+      }
+    },
+    "settings": {
+      "header": "Configurações",
+      "font": {
+        "header": "Enable system font",
+        "description": "Esta opção habilitará a fonte do sistema na WebUI atual. NOTA: Pode não ser compatível com FlipFont"
+      },
+      "theme": {
+        "header": "Habilitar tema claro",
+        "description": "Esta opção habilitará o tema claro para WebUI"
+      },
+      "language": {
+        "header": "Mudar idioma",
+        "description": "Mude para o seu novo idioma"
+      },
+      "logs": {
+        "header": "Histórico de erros",
+        "description": "Veja todo o seu log de erros"
+      }
+    }
+  }
+}

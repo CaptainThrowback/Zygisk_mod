@@ -110,6 +110,49 @@ mv "$TMPDIR/sepolicy.rule" "$MODPATH"
 mkdir "$MODPATH/bin"
 mkdir "$MODPATH/lib"
 mkdir "$MODPATH/lib64"
+mkdir "$MODPATH/webroot"
+
+ui_print "- Extracting webroot"
+extract "$ZIPFILE" 'webroot/index.html' "$MODPATH/webroot" true
+
+extract "$ZIPFILE" 'webroot/js/main.js' "$MODPATH/webroot/js" true
+extract "$ZIPFILE" 'webroot/js/kernelsu.js' "$MODPATH/webroot/js" true
+extract "$ZIPFILE" 'webroot/js/theme.js' "$MODPATH/webroot/js" true
+extract "$ZIPFILE" 'webroot/js/language.js' "$MODPATH/webroot/js" true
+extract "$ZIPFILE" 'webroot/js/navbar.js' "$MODPATH/webroot/js" true
+extract "$ZIPFILE" 'webroot/js/restoreError.js' "$MODPATH/webroot/js" true
+
+extract "$ZIPFILE" 'webroot/js/translate/home.js' "$MODPATH/webroot/js/translate" true
+extract "$ZIPFILE" 'webroot/js/translate/action.js' "$MODPATH/webroot/js/translate" true
+extract "$ZIPFILE" 'webroot/js/translate/modules.js' "$MODPATH/webroot/js/translate" true
+extract "$ZIPFILE" 'webroot/js/translate/settings.js' "$MODPATH/webroot/js/translate" true
+
+extract "$ZIPFILE" 'webroot/js/themes/dark.js' "$MODPATH/webroot/js/theme" true
+extract "$ZIPFILE" 'webroot/js/themes/darkNavbar.js' "$MODPATH/webroot/js/theme" true
+extract "$ZIPFILE" 'webroot/js/themes/light.js' "$MODPATH/webroot/js/theme" true
+extract "$ZIPFILE" 'webroot/js/themes/lightNavbar.js' "$MODPATH/webroot/js/theme" true
+extract "$ZIPFILE" 'webroot/js/themes/lightIcon.js' "$MODPATH/webroot/js/theme" true
+
+extract "$ZIPFILE" 'webroot/js/list/language.js' "$MODPATH/webroot/js/list" true
+
+for lang in en_US ja_JP pt_BR ro_RO ru_RU vi_VN zh_CN zh_TW; do
+  extract "$ZIPFILE" "webroot/lang/${lang}.json" "$MODPATH/webroot/lang" true
+done
+
+extract "$ZIPFILE" 'webroot/js/modal/language.js' "$MODPATH/webroot/js/modal" true
+extract "$ZIPFILE" 'webroot/js/modal/errorHistory.js' "$MODPATH/webroot/js/modal" true
+
+extract "$ZIPFILE" 'webroot/js/switcher/fontChanger.js' "$MODPATH/webroot/js/switcher" true
+
+extract "$ZIPFILE" 'webroot/css/index.css' "$MODPATH/webroot/css" true
+extract "$ZIPFILE" 'webroot/css/fonts.css' "$MODPATH/webroot/css" true
+
+extract "$ZIPFILE" 'webroot/fonts/ProductSans-Italic.ttf' "$MODPATH/webroot/fonts" true
+extract "$ZIPFILE" 'webroot/fonts/ProductSans-Regular.ttf' "$MODPATH/webroot/fonts" true
+
+for svg in mark tick warn module expand settings close content error action home; do
+  extract "$ZIPFILE" "webroot/assets/${svg}.svg" "$MODPATH/webroot/assets" true
+done
 
 if [ "$ARCH" = "x86" ] || [ "$ARCH" = "x64" ]; then
   ui_print "- Extracting x86 libraries"

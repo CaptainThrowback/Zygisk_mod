@@ -1,0 +1,73 @@
+{
+  "langName": "Română (România)",
+  "cmdErrors": {
+    "ptrace64": "Eroare în timpul executării zygisk-ptrace64",
+    "ptrace32": "Eroare în timpul executării zygisk-ptrace32",
+    "ls": "Eroare în timpul listării fișierelor din folderul Zygisk al modulului",
+    "cat": "Eroare în timpul citirii fișierului module.prop din modul",
+    "find": "Eroare la găsirea modulelor Zygisk"
+  },
+  "global": {
+    "unknown": "Necunoscut"
+  },
+  "modal": {
+    "logs": {
+      "header": "Historia e xatăripnasqi",
+      "placeholder": "No error log recorded here!"
+    },
+    "language": {
+      "header": "Alegeți limba prestabilită"
+    }
+  },
+  "page": {
+    "home": {
+      "header": "Khere",
+      "status": {
+        "unknown": "Necunoscut",
+        "notWorking": "Na si funkcionalno",
+        "ok": "Funkcionalo",
+        "partially": "Parśialno funkcionalo"
+      },
+      "info": {
+        "version": "Versiune",
+        "root": "Implementare Root",
+        "zygote": {
+          "injected": "Injectat",
+          "notInjected": "Neinjectat",
+          "unknown": "Necunoscut"
+        }
+      }
+    },
+    "modules": {
+      "header": "Module",
+      "arch": "Arhitectură: "
+    },
+    "action": {
+      "header": "Àkcia",
+      "daemonButton": {
+        "start": "Start",
+        "stop": "Stop",
+        "exit": "Ieșire"
+      }
+    },
+    "settings": {
+      "header": "Setări",
+      "font": {
+        "header": "Aktivisar o sistemosqo fonto",
+        "description": "Akaja opcia ka del śajsaripen e sistemosqo fonto anθ-o akanutno WebUI. NOTA: Shaj te na ovel kompatibilno e FlipFont-esa"
+      },
+      "theme": {
+        "header": "Aktivisar e lumjaki tema",
+        "description": "Akaja opcia ka del shaipe e lumiake temake vash o WebUI"
+      },
+      "language": {
+        "header": "Paruv i ćhib",
+        "description": "Paruv ki tiri nevi ćhib"
+      },
+      "logs": {
+        "header": "Historia e xatăripnasqi",
+        "description": "Dikh sa o lil e greśenqo"
+      }
+    }
+  }
+}

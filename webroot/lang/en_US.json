@@ -1,0 +1,73 @@
+{
+  "langName": "English (United States)",
+  "cmdErrors": {
+    "ptrace64": "Error while executing zygisk-ptrace64",
+    "ptrace32": "Error while executing zygisk-ptrace32",
+    "ls": "Error while listing files in zygisk folder of module",
+    "cat": "Error while reading module.prop from module",
+    "find": "Error while finding zygisk modules"
+  },
+  "global": {
+    "unknown": "Unknown"
+  },
+  "modal": {
+    "logs": {
+      "header": "Error History",
+      "placeholder": "No error log recorded here!"
+    },
+    "language": {
+      "header": "Choose your new language"
+    }
+  },
+  "page": {
+    "home": {
+      "header": "Home",
+      "status": {
+        "unknown": "Unknown",
+        "notWorking": "Not Working",
+        "ok": "Working",
+        "partially": "Partially Working"
+      },
+      "info": {
+        "version": "Version",
+        "root": "Root Implementation",
+        "zygote": {
+          "injected": "Injected",
+          "notInjected": "Not Injected",
+          "unknown": "Unknown"
+        }
+      }
+    },
+    "modules": {
+      "header": "Modules",
+      "arch": "Arch: "
+    },
+    "action": {
+      "header": "Action",
+      "daemonButton": {
+        "start": "Start",
+        "stop": "Stop",
+        "exit": "Exit"
+      }
+    },
+    "settings": {
+      "header": "Settings",
+      "font": {
+        "header": "Enable system font",
+        "description": "This option will enable system font in current WebUI. NOTE: May not be compatible with FlipFont"
+      },
+      "theme": {
+        "header": "Enable light theme",
+        "description": "This option will enable light theme for WebUI"
+      },
+      "language": {
+        "header": "Change language",
+        "description": "Change to your new language"
+      },
+      "logs": {
+        "header": "Error History",
+        "description": "View all of your error log"
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "langName": "Русский (Россия)",
+  "cmdErrors": {
+    "ptrace64": "Ошибка выполнения zygisk-ptrace64",
+    "ptrace32": "Ошибка выполнения zygisk-ptrace32",
+    "ls": "Ошибка перечисления файлов в zygisk папке модуля",
+    "cat": "Ошибка чтения module.prop модуля",
+    "find": "Ошибка обнаружения zygisk модулей"
+  },
+  "global": {
+    "unknown": "Неизвестно"
+  },
+  "modal": {
+    "logs": {
+      "header": "История ошибок",
+      "placeholder": "No error log recorded here!"
+    },
+    "language": {
+      "header": "Выберите Ваш новый язык"
+    }
+  },
+  "page": {
+    "home": {
+      "header": "Дом",
+      "status": {
+        "unknown": "Неизвестно",
+        "notWorking": "Не работает",
+        "ok": "Работающий",
+        "partially": "Частично работает"
+      },
+      "info": {
+        "version": "Версия",
+        "root": "Реализация ROOT",
+        "zygote": {
+          "injected": "Инъецирован",
+          "notInjected": "Не инъецирован",
+          "unknown": "Неизвестно"
+        }
+      }
+    },
+    "modules": {
+      "header": "Модули",
+      "arch": "Архи-ра: "
+    },
+    "action": {
+      "header": "Действие",
+      "daemonButton": {
+        "start": "Старт",
+        "stop": "Пауза",
+        "exit": "Стоп"
+      }
+    },
+    "settings": {
+      "header": "Настройки",
+      "font": {
+        "header": "Включить системный шрифт",
+        "description": "Эта опция включит системный шрифт в текущем WebUI. ПРИМЕЧАНИЕ: Может быть несовместимо с FlipFont"
+      },
+      "theme": {
+        "header": "Включить светлую тему",
+        "description": "Эта опция включит светлую тему для WebUI."
+      },
+      "language": {
+        "header": "Изменить язык",
+        "description": "Измените на новый язык"
+      },
+      "logs": {
+        "header": "История ошибок",
+        "description": "Просмотреть все ваши журналы ошибок"
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "langName": "日本語 (日本)",
+  "cmdErrors": {
+    "ptrace64": "zygisk-ptrace64を実行している間にエラーが発生しました。",
+    "ptrace32": "zygisk-ptrace32を実行している間にエラーが発生しました。",
+    "ls": "zygiskフォルダ内のモジュールをリストする間にエラーが発生しました。",
+    "cat": "モジュールのmoudle.propを読み込んでいる最中にエラーが発生しました。",
+    "find": "zygiskモジュールを検索している間にエラーが発生しました。"
+  },
+  "global": {
+    "unknown": "不明"
+  },
+  "modal": {
+    "logs": {
+      "header": "エラー履歴",
+      "placeholder": "ここにはエラーログは記録されていません。"
+    },
+    "language": {
+      "header": "言語を選択してください"
+    }
+  },
+  "page": {
+    "home": {
+      "header": "家",
+    "status": {
+      "unknown": "未知",
+      "notWorking": "動作しない",
+      "ok": "働く",
+      "partially": "部分的に動作"
+    },
+      "info": {
+        "version": "バージョン",
+        "root": "root権限実装",
+        "zygote": {
+          "injected": "改変完了",
+          "notInjected": "未改変",
+          "unknown": "不明"
+        }
+      }
+    },
+    "modules": {
+    "header": "モジュール",
+    "arch": "アーキテクチャー: "
+    },
+    "action": {
+      "header": "設定",
+      "daemonButton": {
+        "start": "スタート",
+        "stop": "ストップ",
+        "exit": "終了"
+      }
+    },
+    "settings": {
+      "header": "設定",
+      "font": {
+        "header": "システムフォントを有効にする",
+        "description": "このオプションは、現在のWebUIでシステムフォントを有効にします。注意: FlipFontと互換性がない可能性があります"
+      },
+      "theme": {
+        "header": "ライトテーマを有効にする",
+        "description": "このオプションはWebUIのライトテーマを有効にします"
+      },
+      "language": {
+        "header": "言語を変えてください",
+        "description": "新しい言語に変更する"
+      },
+      "logs": {
+        "header": "エラー履歴",
+        "description": "すべてのエラーログを表示する"
+      }
+    }
+  }
+}

@@ -24,7 +24,6 @@ val moduleId: String by rootProject.extra
 val moduleName: String by rootProject.extra
 val verCode: Int by rootProject.extra
 val verName: String by rootProject.extra
-val minAPatchVersion: Int by rootProject.extra
 val minKsuVersion: Int by rootProject.extra
 val minKsudVersion: Int by rootProject.extra
 val maxKsuVersion: Int by rootProject.extra
@@ -53,7 +52,7 @@ androidComponents.onVariants { variant ->
         into(moduleDir)
         from("${rootProject.projectDir}/README.md")
         from("$projectDir/src") {
-            exclude("module.prop", "customize.sh", "post-fs-data.sh", "service.sh", "uninstall.sh", "mazoku")
+            exclude("module.prop", "customize.sh", "post-fs-data.sh", "service.sh", "mazoku")
             filter<FixCrLfFilter>("eol" to FixCrLfFilter.CrLf.newInstance("lf"))
         }
         from("$projectDir/src") {
@@ -67,10 +66,9 @@ androidComponents.onVariants { variant ->
         }
         from("$projectDir/src/mazoku")
         from("$projectDir/src") {
-            include("customize.sh", "post-fs-data.sh", "service.sh", "uninstall.sh")
+            include("customize.sh", "post-fs-data.sh", "service.sh")
             val tokens = mapOf(
                 "DEBUG" to if (buildTypeLowered == "debug") "true" else "false",
-                "MIN_APATCH_VERSION" to "$minAPatchVersion",
                 "MIN_KSU_VERSION" to "$minKsuVersion",
                 "MIN_KSUD_VERSION" to "$minKsudVersion",
                 "MAX_KSU_VERSION" to "$maxKsuVersion",
@@ -85,6 +83,9 @@ androidComponents.onVariants { variant ->
         }
         into("lib") {
             from(project(":loader").layout.buildDirectory.file("intermediates/stripped_native_libs/$variantLowered/out/lib"))
+        }
+        into("webroot") {
+            from("${rootProject.projectDir}/webroot")
         }
 
         val root = moduleDir.get()
@@ -160,6 +161,59 @@ androidComponents.onVariants { variant ->
                             root.file("bin/$abi64/zygiskd").asFile
                         )
                     )
+                    set.add(Pair(root.file("webroot/index.html").asFile, null))
+
+                    set.add(Pair(root.file("webroot/js/main.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/kernelsu.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/theme.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/language.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/restoreError.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/navbar.js").asFile, null))
+
+                    set.add(Pair(root.file("webroot/js/translate/action.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/translate/home.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/translate/modules.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/translate/settings.js").asFile, null))
+
+                    set.add(Pair(root.file("webroot/js/themes/dark.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/themes/darkNavbar.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/themes/light.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/themes/lightNavbar.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/themes/lightIcon.js").asFile, null))
+
+                    set.add(Pair(root.file("webroot/js/list/language.js").asFile, null))
+
+                    set.add(Pair(root.file("webroot/js/switcher/fontChanger.js").asFile, null))
+
+                    set.add(Pair(root.file("webroot/lang/en_US.json").asFile, null))
+                    set.add(Pair(root.file("webroot/lang/ja_JP.json").asFile, null))
+                    set.add(Pair(root.file("webroot/lang/pt_BR.json").asFile, null))
+                    set.add(Pair(root.file("webroot/lang/ro_RO.json").asFile, null))
+                    set.add(Pair(root.file("webroot/lang/ru_RU.json").asFile, null))
+                    set.add(Pair(root.file("webroot/lang/vi_VN.json").asFile, null))
+                    set.add(Pair(root.file("webroot/lang/zh_CN.json").asFile, null))
+                    set.add(Pair(root.file("webroot/lang/zh_TW.json").asFile, null))
+
+                    set.add(Pair(root.file("webroot/js/modal/language.js").asFile, null))
+                    set.add(Pair(root.file("webroot/js/modal/errorHistory.js").asFile, null))
+
+                    set.add(Pair(root.file("webroot/css/index.css").asFile, null))
+                    set.add(Pair(root.file("webroot/css/fonts.css").asFile, null))
+
+                    set.add(Pair(root.file("webroot/fonts/ProductSans-Italic.ttf").asFile, null))
+                    set.add(Pair(root.file("webroot/fonts/ProductSans-Regular.ttf").asFile, null))
+                    
+                    set.add(Pair(root.file("webroot/assets/mark.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/tick.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/warn.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/module.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/expand.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/settings.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/close.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/content.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/error.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/action.svg").asFile, null))
+                    set.add(Pair(root.file("webroot/assets/home.svg").asFile, null))
                     sig.initSign(privKey)
                     set.forEach { it.first.sha(it.second) }
                     val signFile = root.file(name).asFile
@@ -216,22 +270,10 @@ androidComponents.onVariants { variant ->
         }
     }
 
-    val installAPatchTask = task<Exec>("installAPatch$variantCapped") {
-        group = "module"
-        dependsOn(pushTask)
-        commandLine("adb", "shell", "su", "-c", "/data/adb/apd module install /data/local/tmp/$zipFileName")
-    }
-
     val installMagiskTask = task<Exec>("installMagisk$variantCapped") {
         group = "module"
         dependsOn(pushTask)
         commandLine("adb", "shell", "su", "-M", "-c", "magisk --install-module /data/local/tmp/$zipFileName")
-    }
-
-    task<Exec>("installAPatchAndReboot$variantCapped") {
-        group = "module"
-        dependsOn(installAPatchTask)
-        commandLine("adb", "reboot")
     }
 
     task<Exec>("installKsuAndReboot$variantCapped") {

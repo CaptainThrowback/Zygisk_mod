@@ -1,0 +1,73 @@
+{
+  "langName": "Tiếng Việt",
+  "cmdErrors": {
+    "ptrace64": "Đã xảy ra lỗi khi chạy zygisk-ptrace64",
+    "ptrace32": "Đã xảy ra lỗi khi chạy zygisk-ptrace32",
+    "ls": "Đã xảy ra lỗi khi liệt kê tệp tin của mô đun trong thư mục zygisk",
+    "cat": "Đã xảy ra lỗi khi đọc tệp tin module.prop từ mô đun",
+    "find": "Đã xảy ra lỗi khi tìm mô đun thuộc zygisk"
+  },
+  "global": {
+    "unknown": "Không xác định"
+  },
+  "modal": {
+    "logs": {
+      "header": "Lịch sử lỗi",
+      "placeholder": "Không có lỗi nào đã được ghi lại ở đây!"
+    },
+    "language": {
+      "header": "Chọn ngôn ngữ mới của bạn"
+    }
+  },
+  "page": {
+    "home": {
+      "header": "Trang Chủ",
+      "status": {
+        "unknown": "ReZygisk đang ở trạng thái không xác định!",
+        "notWorking": "ReZygisk không hoạt động!",
+        "ok": "ReZygisk đang hoạt động!",
+        "partially": "ReZygisk đang hoạt động một phần!"
+      },
+      "info": {
+        "version": "Phiên bản",
+        "root": "Hệ thống root",
+        "zygote": {
+          "injected": "Đã can thiệp",
+          "notInjected": "Chưa can thiệp",
+          "unknown": "Không xác định"
+        }
+      }
+    },
+    "modules": {
+      "header": "Mô Đun",
+      "arch": "Cấu trúc: "
+    },
+    "action": {
+      "header": "Trình điều khiển",
+      "daemonButton": {
+        "start": "Chạy",
+        "stop": "Dừng",
+        "exit": "Thoát"
+      }
+    },
+    "settings": {
+      "header": "Cài đặt",
+      "font": {
+        "header": "Sử dụng phông chữ hệ thống",
+        "description": "Tuỳ chọn này sẽ cho phép người dùng sử dụng phông chữ của hệ thống. LƯU Ý: Có thể sẽ không tương thích với FlipFont"
+      },
+      "theme": {
+        "header": "Sử dụng chế độ sáng",
+        "description": "Tuỳ chọn này sẽ bật chế độ sáng cho WebUI"
+      },
+      "language": {
+        "header": "Thay đổi ngôn ngữ",
+        "description": "Thay đổi sang ngôn ngữ mới"
+      },
+      "logs": {
+        "header": "Lịch sử lỗi",
+        "description": "Xem tất cả các lỗi"
+      }
+    }
+  }
+}

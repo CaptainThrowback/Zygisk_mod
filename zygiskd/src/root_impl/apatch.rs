@@ -33,6 +33,7 @@ fn read_su_path() -> Result<String, io::Error> {
 }
 
 pub fn get_apatch() -> Option<Version> {
+    let default_su_path = String::from("/system/bin/su");
     let su_path = read_su_path().ok()?;
 
     let output = Command::new(&su_path)
@@ -53,13 +54,17 @@ pub fn get_apatch() -> Option<Version> {
         .output()
         .ok()?;
     let stdout1 = String::from_utf8(output1.stdout).ok()?;
-    let version = parse_version(&stdout1);
-    const MAX_OLD_VERSION: i32 = MIN_APATCH_VERSION - 1;
-    match version {
-        0 => Some(Version::Abnormal),
-        v if v >= MIN_APATCH_VERSION && v <= 999999 => Some(Version::Supported),
-        v if v >= 1 && v <= MAX_OLD_VERSION => Some(Version::TooOld),
-        _ => None,
+    if su_path == default_su_path {
+        let version = parse_version(&stdout1);
+        const MAX_OLD_VERSION: i32 = MIN_APATCH_VERSION - 1;
+        match version {
+            0 => Some(Version::Abnormal),
+            v if v >= MIN_APATCH_VERSION && v <= 999999 => Some(Version::Supported),
+            v if v >= 1 && v <= MAX_OLD_VERSION => Some(Version::TooOld),
+            _ => None,
+        }
+    } else {
+        return None;
     }
 }
 

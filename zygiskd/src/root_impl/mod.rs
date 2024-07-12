@@ -1,5 +1,3 @@
-use std::ptr::addr_of;
-
 mod kernelsu;
 mod magisk;
 mod apatch;
@@ -23,7 +21,11 @@ pub fn setup() {
     let magisk_version = magisk::get_magisk();
 
     let impl_ = match (apatch_version, ksu_version, magisk_version) {
+        (None, None, None) => RootImpl::None,
         (Some(_), Some(_), None) => RootImpl::Multiple,
+        (None, Some(_), Some(_)) => RootImpl::Multiple,
+        (Some(_), None, Some(_)) => RootImpl::Multiple,
+        (Some(_), Some(_), Some(_)) => RootImpl::Multiple,
         (Some(apatch_version),None, None) => match apatch_version {
             apatch::Version::Supported => RootImpl::APatch,
             apatch::Version::TooOld => RootImpl::TooOld,
@@ -46,7 +48,7 @@ pub fn setup() {
 }
 
 pub fn get_impl() -> &'static RootImpl {
-  unsafe { &*addr_of!(ROOT_IMPL) }
+    unsafe { &ROOT_IMPL }
 }
 
 pub fn uid_granted_root(uid: i32) -> bool {

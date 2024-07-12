@@ -52,7 +52,7 @@ androidComponents.onVariants { variant ->
         into(moduleDir)
         from("${rootProject.projectDir}/README.md")
         from("$projectDir/src") {
-            exclude("module.prop", "customize.sh", "post-fs-data.sh", "service.sh", "mazoku")
+            exclude("module.prop", "customize.sh", "post-fs-data.sh", "service.sh")
             filter<FixCrLfFilter>("eol" to FixCrLfFilter.CrLf.newInstance("lf"))
         }
         from("$projectDir/src") {
@@ -64,7 +64,6 @@ androidComponents.onVariants { variant ->
                 "versionCode" to verCode
             )
         }
-        from("$projectDir/src/mazoku")
         from("$projectDir/src") {
             include("customize.sh", "post-fs-data.sh", "service.sh")
             val tokens = mapOf(
@@ -90,157 +89,7 @@ androidComponents.onVariants { variant ->
 
         val root = moduleDir.get()
 
-        doLast {
-            if (file("private_key").exists()) {
-                println("=== Guards the peace of Machikado ===")
-                val privateKey = file("private_key").readBytes()
-                val publicKey = file("public_key").readBytes()
-                val namedSpec = NamedParameterSpec("ed25519")
-                val privKeySpec = EdECPrivateKeySpec(namedSpec, privateKey)
-                val kf = KeyFactory.getInstance("ed25519")
-                val privKey = kf.generatePrivate(privKeySpec);
-                val sig = Signature.getInstance("ed25519")
-                fun File.sha(realFile: File? = null) {
-                    val path = this.path.replace("\\", "/")
-                    sig.update(this.name.toByteArray())
-                    sig.update(0) // null-terminated string
-                    val real = realFile ?: this
-                    val buffer = ByteBuffer.allocate(8)
-                        .order(ByteOrder.LITTLE_ENDIAN)
-                        .putLong(real.length())
-                        .array()
-                    sig.update(buffer)
-                    real.forEachBlock { bytes, size ->
-                        sig.update(bytes, 0, size)
-                    }
-                }
-
-                fun getSign(name: String, abi32: String, abi64: String) {
-                    val set = TreeSet<Pair<File, File?>> { o1, o2 ->
-                        o1.first.path.replace("\\", "/")
-                            .compareTo(o2.first.path.replace("\\", "/"))
-                    }
-                    set.add(Pair(root.file("module.prop").asFile, null))
-                    set.add(Pair(root.file("sepolicy.rule").asFile, null))
-                    set.add(Pair(root.file("post-fs-data.sh").asFile, null))
-                    set.add(Pair(root.file("service.sh").asFile, null))
-                    set.add(Pair(root.file("mazoku").asFile, null))
-                    set.add(
-                        Pair(
-                            root.file("lib/libzygisk.so").asFile,
-                            root.file("lib/$abi32/libzygisk.so").asFile
-                        )
-                    )
-                    set.add(
-                        Pair(
-                            root.file("lib64/libzygisk.so").asFile,
-                            root.file("lib/$abi64/libzygisk.so").asFile
-                        )
-                    )
-                    set.add(
-                        Pair(
-                            root.file("bin/zygisk-ptrace32").asFile,
-                            root.file("lib/$abi32/libzygisk_ptrace.so").asFile
-                        )
-                    )
-                    set.add(
-                        Pair(
-                            root.file("bin/zygisk-ptrace64").asFile,
-                            root.file("lib/$abi64/libzygisk_ptrace.so").asFile
-                        )
-                    )
-                    set.add(
-                        Pair(
-                            root.file("bin/zygiskd32").asFile,
-                            root.file("bin/$abi32/zygiskd").asFile
-                        )
-                    )
-                    set.add(
-                        Pair(
-                            root.file("bin/zygiskd64").asFile,
-                            root.file("bin/$abi64/zygiskd").asFile
-                        )
-                    )
-                    set.add(Pair(root.file("webroot/index.html").asFile, null))
-
-                    set.add(Pair(root.file("webroot/js/main.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/kernelsu.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/theme.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/language.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/restoreError.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/navbar.js").asFile, null))
-
-                    set.add(Pair(root.file("webroot/js/translate/action.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/translate/home.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/translate/modules.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/translate/settings.js").asFile, null))
-
-                    set.add(Pair(root.file("webroot/js/themes/dark.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/themes/darkNavbar.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/themes/light.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/themes/lightNavbar.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/themes/lightIcon.js").asFile, null))
-
-                    set.add(Pair(root.file("webroot/js/list/language.js").asFile, null))
-
-                    set.add(Pair(root.file("webroot/js/switcher/fontChanger.js").asFile, null))
-
-                    set.add(Pair(root.file("webroot/lang/en_US.json").asFile, null))
-                    set.add(Pair(root.file("webroot/lang/ja_JP.json").asFile, null))
-                    set.add(Pair(root.file("webroot/lang/pt_BR.json").asFile, null))
-                    set.add(Pair(root.file("webroot/lang/ro_RO.json").asFile, null))
-                    set.add(Pair(root.file("webroot/lang/ru_RU.json").asFile, null))
-                    set.add(Pair(root.file("webroot/lang/vi_VN.json").asFile, null))
-                    set.add(Pair(root.file("webroot/lang/zh_CN.json").asFile, null))
-                    set.add(Pair(root.file("webroot/lang/zh_TW.json").asFile, null))
-
-                    set.add(Pair(root.file("webroot/js/modal/language.js").asFile, null))
-                    set.add(Pair(root.file("webroot/js/modal/errorHistory.js").asFile, null))
-
-                    set.add(Pair(root.file("webroot/css/index.css").asFile, null))
-                    set.add(Pair(root.file("webroot/css/fonts.css").asFile, null))
-
-                    set.add(Pair(root.file("webroot/fonts/ProductSans-Italic.ttf").asFile, null))
-                    set.add(Pair(root.file("webroot/fonts/ProductSans-Regular.ttf").asFile, null))
-                    
-                    set.add(Pair(root.file("webroot/assets/mark.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/tick.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/warn.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/module.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/expand.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/settings.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/close.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/content.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/error.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/action.svg").asFile, null))
-                    set.add(Pair(root.file("webroot/assets/home.svg").asFile, null))
-                    sig.initSign(privKey)
-                    set.forEach { it.first.sha(it.second) }
-                    val signFile = root.file(name).asFile
-                    signFile.writeBytes(sig.sign())
-                    signFile.appendBytes(publicKey)
-                }
-
-                getSign("machikado.arm", "armeabi-v7a", "arm64-v8a")
-                getSign("machikado.x86", "x86", "x86_64")
-            } else {
-                println("no private_key found, this build will not be signed")
-                root.file("machikado.arm").asFile.createNewFile()
-                root.file("machikado.x86").asFile.createNewFile()
-            }
-
-            fileTree(moduleDir).visit {
-                if (isDirectory) return@visit
-                val md = MessageDigest.getInstance("SHA-256")
-                file.forEachBlock(4096) { bytes, size ->
-                    md.update(bytes, 0, size)
-                }
-                file(file.path + ".sha256").writeText(Hex.encodeHexString(md.digest()))
-            }
-        }
-    }
-
-    val zipTask = task<Zip>("zip$variantCapped") {
+        val zipTask = task<Zip>("zip$variantCapped") {
         group = "module"
         dependsOn(prepareModuleFilesTask)
         archiveFileName.set(zipFileName)

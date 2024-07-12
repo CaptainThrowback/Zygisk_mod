@@ -1,5 +1,6 @@
 use std::process::{Command, Stdio};
 use std::fs::File;
+use std::io::{self, BufRead, BufReader};
 use serde::Deserialize;
 use crate::constants::MIN_APATCH_VERSION;
 
@@ -8,6 +9,7 @@ pub enum Version {
     TooOld,
     Abnormal,
 }
+
 fn parse_version(output: &str) -> i32 {
     let mut version: Option<i32> = None;
     for line in output.lines() {
@@ -21,7 +23,28 @@ fn parse_version(output: &str) -> i32 {
     version.unwrap_or_default()
 }
 
+fn read_su_path() -> Result<String, io::Error> {
+    let file = File::open("/data/adb/ap/su_path")?;
+    let mut reader = BufReader::new(file);
+    let mut su_path = String::new();
+    reader.read_line(&mut su_path)?;
+    Ok(su_path.trim().to_string())
+}
+
 pub fn get_apatch() -> Option<Version> {
+    let su_path = read_su_path().ok()?;
+
+    let output = Command::new(&su_path)
+        .arg("-v")
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .output()
+        .ok()?;
+    let stdout = String::from_utf8(output.stdout).ok()?;
+    if !stdout.contains("APatch") {
+        return None;
+    }
+
     let output1 = Command::new("/data/adb/apd")
         .arg("-V")
         .stdout(Stdio::piped())
